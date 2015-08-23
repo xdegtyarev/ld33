@@ -35,6 +35,7 @@ public class CardStack : MonoBehaviour {
 
 	public void Drop(CardView card){
 		cards.Add(card);
+		card.currentStack = this;
 		card.Open(open);
 		card.transform.SetParent(transform);
 		card.transform.localPosition = new Vector3(cards.Count*2,cards.Count*2,cards.Count);

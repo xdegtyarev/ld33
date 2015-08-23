@@ -26,5 +26,9 @@ public class Card {
 	public virtual void Use(){
 
 	}
+
+	public bool CanDrag(){
+		return state!=CardState.Arena && state!=CardState.Dead && state!=CardState.Tapped;
+	}
 }
 
