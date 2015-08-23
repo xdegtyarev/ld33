@@ -4,10 +4,8 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
-	 Vector3 startPosition;
-	 Transform startParent;
-
-
+	Vector3 startPosition;
+    Transform startParent;
 
     Card card;
     [SerializeField] Text nameLabel;
@@ -36,22 +34,21 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     }
 
+    Transform parentTransform;
+
     public void OnBeginDrag(UnityEngine.EventSystems.PointerEventData eventData) {
-        startPosition = transform.position;
-        startParent = transform.parent;
+        parentTransform = transform.parent;
         GetComponent<CanvasGroup>().blocksRaycasts = false;
+        DragDropManager.RegisterDragTarget(gameObject);
     }
 
     public void OnDrag(UnityEngine.EventSystems.PointerEventData eventData) {
-        transform.position = Input.mousePosition;
-
+        transform.localPosition = eventData.position - new Vector2(400,300); //half screen offset
     }
 
     public void OnEndDrag(UnityEngine.EventSystems.PointerEventData eventData) {
-        if (transform.parent != startParent) {
-            transform.position = startPosition;
-        }
         GetComponent<CanvasGroup>().blocksRaycasts = true;
+        DragDropManager.ResetDragTarget(gameObject);
     }
 
 }
