@@ -8,7 +8,7 @@ public class Environment : MonoBehaviour {
 	[SerializeField] Image background;
 	[SerializeField] Color[] fractionAccents;
 	[SerializeField] Color[] fractionImageAccents;
-	[SerializeField] int currentFraction;
+	[SerializeField] public int currentFraction;
 	EnvironmentCardView currentEnvCard;
 
 	void Awake(){

@@ -3,56 +3,55 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Enemy : MonoBehaviour {
-	public static Enemy instance;
-	[SerializeField] CardStack[] stacks;
-	[SerializeField] int hp;
-	[SerializeField] int mana;
-	[SerializeField] Text hpLabel;
-	[SerializeField] Text manaLabel;
-	public Hand playerHand;
-	public Playfield playerPlayfield;
+public class Enemy : MonoBehaviour,IHitReceiver {
+    public static Enemy instance;
+    [SerializeField] CardStack[] stacks;
+    [SerializeField] int hp;
+    [SerializeField] Text hpLabel;
+    public Hand playerHand;
+    public Playfield playerPlayfield;
 
-	void Awake(){
-		instance = this;
-	}
+    void Awake() {
+        instance = this;
+    }
 
-	public void Play(){
-		StartCoroutine(Turn());
-	}
+    void Update(){
+    	hpLabel.text = "Health " + hp;
+    }
 
-	IEnumerator Turn(){
-		playerPlayfield.UntapCards();
-		yield return new WaitForSeconds(1f);
-		PickRandomCard();
-		yield return new WaitForSeconds(1f);
-		TryPlayCards();
-		yield return new WaitForSeconds(1f);
-		TryTapCards();
-		yield return new WaitForSeconds(1f);
-		TurnManager.NewTurn();
-	}
+    public void Play() {
+        StartCoroutine(Turn());
+    }
 
-	public void PickRandomCard(){
-		playerHand.PickCard(stacks[Random.Range(0, stacks.Length)].Draw());
-	}
+    public void ReceiveHit(int hit) {
+        hp -= hit;
+        if (hp < 0) {
+            Debug.Log("LOOOOSEEE");
+        }
+    }
 
-	public void TryPlayCards(){
-		if(playerHand.GetCardsCount()>0 && playerPlayfield.GetEmptySlotsCount()>0){
-			int randCount = Mathf.Min(Random.Range(1, playerHand.GetCardsCount()),Random.Range(1, playerPlayfield.GetEmptySlotsCount()));
-			for(int i=0;i<randCount;i++){
-				playerPlayfield.GetRandomFreeSlot().AttachCard(playerHand.GetRandomCard());
-			}
-		}
-	}
+    IEnumerator Turn() {
+        playerPlayfield.UntapCards();
+        yield return new WaitForSeconds(0.5f);
+        playerHand.PickCard(stacks[Random.Range(0, stacks.Length)].Draw());
+        yield return new WaitForSeconds(0.5f);
+        //PlayCards
+        if (playerHand.GetCardsCount() > 0 && playerPlayfield.GetEmptySlotsCount() > 0) {
+            int randCount = Mathf.Min(Random.Range(1, playerHand.GetCardsCount()), Random.Range(1, playerPlayfield.GetEmptySlotsCount()));
+            for (int i = 0; i < randCount; i++) {
+                playerPlayfield.GetRandomFreeSlot().AttachCard(playerHand.GetRandomCard());
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
+        //TapCards
+        if (playerPlayfield.GetSlotsCount() > 0) {
+            int randCount = Random.Range(1, playerPlayfield.GetSlotsCount());
+            for (int i = 0; i < randCount; i++) {
+                playerPlayfield.GetRandomSlot().card.Tap();
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
 
-	public void TryTapCards(){
-		if(playerPlayfield.GetSlotsCount()>0){
-			int randCount = Random.Range(1,playerPlayfield.GetSlotsCount());
-			for(int i=0;i<randCount;i++){
-				playerPlayfield.GetRandomSlot().card.Tap();
-			}
-		}
-	}
-
+        TurnManager.NewTurn();
+    }
 }

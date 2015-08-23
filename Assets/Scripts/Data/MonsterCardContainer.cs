@@ -3,7 +3,11 @@ using System.Collections;
 
 
 [System.Serializable]
-public class MonsterCard:Card {}
+public class MonsterCard:Card {
+	public int hp;
+	public int attack;
+	public int def;
+}
 
 public class MonsterCardContainer: DataContainer<Card>{
 	[SerializeField] MonsterCard card;
