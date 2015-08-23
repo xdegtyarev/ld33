@@ -71,13 +71,13 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
     }
 
-    public void Tap() {
+    public virtual void Tap() {
         transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, 30f));
         card.Use();
         card.state = CardState.Tapped;
     }
 
-    public void Untap() {
+    public virtual void Untap() {
         transform.localRotation = Quaternion.identity;
         card.state = CardState.Arena;
     }
