@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
 public class PlayfieldSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler {
-	public CardView card;
 	[SerializeField] GameObject selection;
+	public CardView card{get{return transform.GetComponentInChildren<CardView>();}}
 
-	public void AttachCard(CardView attachment){
-		card = attachment;
+	public void AttachCard(CardView card){
 		card.Open(true);
     	card.GetComponent<RectTransform>().SetParent(transform);
     	card.GetComponent<RectTransform>().localPosition = Vector3.zero;
@@ -17,7 +16,7 @@ public class PlayfieldSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 	}
 
     public void OnDrop(PointerEventData eventData) {
-    	if(card == null && DragDropManager.GetDraggedObject()!=null ){
+    	if(card == null && DragDropManager.GetDraggedObject()!=null && selection){
     		var attachment = DragDropManager.GetDraggedObject().GetComponent<CardView>();
     		if(attachment.GetCardData().state != CardState.Arena && attachment.GetCardData().state != CardState.Tapped && attachment.GetCardData().state!=CardState.Stacked){
     			AttachCard(attachment);
@@ -27,7 +26,7 @@ public class PlayfieldSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     }
 
     public void OnPointerExit(PointerEventData eventData) {
-    	if(card==null){
+    	if(card==null && selection){
 	    	if(DragDropManager.IsDragging()){
 	    		selection.SetActive(false);
 	    	}
@@ -35,7 +34,7 @@ public class PlayfieldSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-    	if(card==null){
+    	if(card==null && selection){
 	    	if(DragDropManager.IsDragging()){
 				selection.SetActive(true);
 			}

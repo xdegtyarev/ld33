@@ -9,13 +9,18 @@ public class Environment : MonoBehaviour {
 	[SerializeField] Color[] fractionAccents;
 	[SerializeField] Color[] fractionImageAccents;
 	[SerializeField] int currentFraction;
+	EnvironmentCardView currentEnvCard;
 
 	void Awake(){
 		instance=this;
 	}
 
-	public void SetCurrentEnvironment(int fraction){
-		currentFraction = fraction;
+	public void SetCurrentEnvironment(EnvironmentCardView card){
+		if(currentEnvCard!=null){
+			Graveyard.Engrave(currentEnvCard);
+		}
+		currentEnvCard = card;
+		currentFraction = currentEnvCard.GetCardData().fraction;
 		if(currentFraction>=0){
 			cam.backgroundColor = fractionAccents[currentFraction];
 			background.color = fractionImageAccents[currentFraction];
