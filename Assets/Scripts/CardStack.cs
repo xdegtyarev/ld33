@@ -20,7 +20,7 @@ public class CardStack : MonoBehaviour {
 
 	public void Generate(){
 		for(int i = 0; i<stackHeight && cardsBase.Count>0; i++){
-			Drop(CardFactory.CreateCard(cardsBase[Random.Range(0, cardsBase.Count)]));
+			Drop(CardFactory.CreateCard(cardsBase[Random.Range(0, cardsBase.Count)].Clone()));
 		}
 	}
 
@@ -35,6 +35,7 @@ public class CardStack : MonoBehaviour {
 
 	public void Drop(CardView card){
 		cards.Add(card);
+		card.Open(open);
 		card.transform.SetParent(transform);
 		card.transform.localPosition = new Vector3(cards.Count*2,cards.Count*2,cards.Count);
 		card.transform.localRotation = Quaternion.identity;

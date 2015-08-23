@@ -13,6 +13,7 @@ public class PlayfieldSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 	    	DragDropManager.GetDraggedObject().GetComponent<RectTransform>().localRotation = Quaternion.identity;
 	    	DragDropManager.GetDraggedObject().GetComponent<RectTransform>().localScale = Vector3.one;
 	    	card = DragDropManager.GetDraggedObject().GetComponent<CardView>();
+	    	card.GetCardData().state = CardState.Arena;
 	    	selection.SetActive(false);
     	}
     }

@@ -3,8 +3,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 
-public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
-	Vector3 startPosition;
+public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler {
+    Vector3 startPosition;
     Transform startParent;
 
     Card card;
@@ -34,21 +34,52 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     }
 
+    public Card GetCardData(){
+        return card;
+    }
+
     Transform parentTransform;
 
-    public void OnBeginDrag(UnityEngine.EventSystems.PointerEventData eventData) {
+    public void OnPointerClick(PointerEventData eventData) {
+        switch (card.state) {
+            case CardState.Stacked:
+                Open(true);
+                Player.instance.playerHand.PickCard(this);
+                break;
+            case CardState.Handed:
+                CardPreviewer.instance.PreviewCard(this);
+                break;
+            case CardState.Arena:
+                transform.localRotation = Quaternion.Euler(new Vector3(0f,0f,30f));
+                card.Use();
+                card.state = CardState.Tapped;
+                break;
+            case CardState.Tapped:
+                //nothing
+                break;
+            case CardState.Dead:
+                CardPreviewer.instance.PreviewCard(this);
+                break;
+        }
+    }
+
+    public void OnBeginDrag(PointerEventData eventData) {
+        Open(true);
         parentTransform = transform.parent;
         GetComponent<CanvasGroup>().blocksRaycasts = false;
         DragDropManager.RegisterDragTarget(gameObject);
     }
 
-    public void OnDrag(UnityEngine.EventSystems.PointerEventData eventData) {
+    public void OnDrag(PointerEventData eventData) {
         transform.localPosition = eventData.position - new Vector2(400,300); //half screen offset
     }
 
-    public void OnEndDrag(UnityEngine.EventSystems.PointerEventData eventData) {
+    public void OnEndDrag(PointerEventData eventData) {
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         DragDropManager.ResetDragTarget(gameObject);
+        if(card.state == CardState.Stacked){
+
+        }
     }
 
 }
