@@ -14,7 +14,12 @@ public class MagicCardView : CardView {
             multiplier*=Environment.instance.currentFractionMultiplier;
         }
 		TargetManager.GetTarget(this).ReceiveHit((int)(data.attack*multiplier));
-		Graveyard.Engrave(this);
+		StartCoroutine(Die());
+    }
+
+    public IEnumerator Die(){
+    	yield return new WaitForSeconds(1f);
+    	Graveyard.Engrave(this);
     }
 
 	public override void Untap() {

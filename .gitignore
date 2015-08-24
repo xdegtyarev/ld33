@@ -2,5 +2,6 @@
 *.sublime-workspace
 Library/
 Temp/
+Build/
 *.sln
 *.csproj

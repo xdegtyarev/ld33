@@ -20,11 +20,11 @@ public class NotificationManager : MonoBehaviour {
 
 	public void Update(){
 		if(label.color.a>0f){
-			label.color = new Color(label.color.r,label.color.g,label.color.b,label.color.a-Time.deltaTime*0.5f);
+			label.color = new Color(label.color.r,label.color.g,label.color.b,label.color.a-Time.deltaTime*0.25f);
 		}
 
 		if(image.color.a>0f){
-			image.color = new Color(image.color.r,image.color.g,image.color.b,image.color.a-Time.deltaTime*0.5f);
+			image.color = new Color(image.color.r,image.color.g,image.color.b,image.color.a-Time.deltaTime*0.25f);
 		}
 	}
 }

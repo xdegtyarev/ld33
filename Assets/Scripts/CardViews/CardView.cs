@@ -18,6 +18,7 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     [SerializeField] Image[] colorAccents;
     [SerializeField] GameObject frontView;
     [SerializeField] GameObject selection;
+    bool enemy;
 
     public virtual void Setup(Card cardData) {
         card = cardData;
@@ -32,6 +33,10 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void Open(bool open) {
         frontView.SetActive(open);
+    }
+
+    public void SetEnemyCard(){
+        enemy = true;
     }
 
     public void UpdateView() {
@@ -62,10 +67,16 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                 Player.instance.playerHand.PickCard(this);
                 break;
             case CardState.Handed:
-                CardPreviewer.instance.PreviewCard(this);
+                if(!enemy){
+                    CardPreviewer.instance.PreviewCard(this);
+                }
                 break;
             case CardState.Arena:
-                Tap();
+                if(enemy){
+                    CardPreviewer.instance.PreviewCard(this);
+                }else{
+                    Tap();
+                }
                 break;
             case CardState.Tapped:
                 CardPreviewer.instance.PreviewCard(this);

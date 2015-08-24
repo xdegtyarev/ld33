@@ -34,7 +34,7 @@ public class PlayfieldSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-    	if(card==null && selection){
+    	if(card==null && selection && DragDropManager.GetDraggedObject()!=null && DragDropManager.GetDraggedObject().GetComponent<CardView>().GetCardData().state == CardState.Handed){
 	    	if(DragDropManager.IsDragging()){
 				selection.SetActive(true);
 			}

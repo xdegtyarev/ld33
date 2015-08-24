@@ -37,8 +37,9 @@ public class CardStack : MonoBehaviour {
 		cards.Add(card);
 		card.currentStack = this;
 		card.Open(open);
+		card.transform.localRotation = Quaternion.identity;
 		card.transform.SetParent(transform);
-		card.transform.localPosition = new Vector3(cards.Count*2,cards.Count*2,cards.Count);
+		card.transform.localPosition = new Vector3(cards.Count*3,cards.Count*3,cards.Count);
 		card.transform.localRotation = Quaternion.identity;
 		card.transform.localScale = Vector3.one;
 	}

@@ -14,10 +14,12 @@ public class MonsterCardView : CardView, IHitReceiver {
     		hit -= (int)(data.def * multiplier);
     	}
         NotificationManager.instance.ShowNotification("Monster hit " + hit, Color.white);
-        data.hp-=hit;
- 		if(data.hp<0){
-			Graveyard.Engrave(this);
-		}
+        if(hit>0){
+            data.hp-=hit;
+     		if(data.hp<0){
+    			Graveyard.Engrave(this);
+    		}
+        }
     }
 
     void Update(){

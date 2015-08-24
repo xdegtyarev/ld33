@@ -10,4 +10,9 @@ public class EnvironmentCardView : CardView {
         Environment.instance.SetCurrentEnvironment(this);
           AudioSource.PlayClipAtPoint(environmentUseClip[Random.Range(0, environmentUseClip.Length)], Vector3.zero);
     }
+
+
+	public override void Untap() {
+    	;
+    }
 }
