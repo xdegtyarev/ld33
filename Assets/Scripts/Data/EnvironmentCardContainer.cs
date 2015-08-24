@@ -3,6 +3,7 @@ using System.Collections;
 
 [System.Serializable]
 public class EnvironmentCard:Card {
+	public float fractionMultiplier;
 }
 
 public class EnvironmentCardContainer: DataContainer<Card>{

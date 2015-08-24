@@ -7,6 +7,8 @@ public class MonsterCard:Card {
 	public int hp;
 	public int attack;
 	public int def;
+	public int weaknessFraction;
+	public int resistanceFraction;
 }
 
 public class MonsterCardContainer: DataContainer<Card>{

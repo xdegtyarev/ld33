@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour,IHitReceiver {
             int randCount = Mathf.Min(Random.Range(1, playerHand.GetCardsCount()), Random.Range(1, playerPlayfield.GetEmptySlotsCount()));
             for (int i = 0; i < randCount; i++) {
                 playerPlayfield.GetRandomFreeSlot().AttachCard(playerHand.GetRandomCard());
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(1f);
             }
         }
         //TapCards
@@ -48,7 +48,7 @@ public class Enemy : MonoBehaviour,IHitReceiver {
             int randCount = Random.Range(1, playerPlayfield.GetSlotsCount());
             for (int i = 0; i < randCount; i++) {
                 playerPlayfield.GetRandomSlot().card.Tap();
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(1f);
             }
         }
 

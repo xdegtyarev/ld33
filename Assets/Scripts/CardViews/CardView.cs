@@ -63,7 +63,7 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                 Tap();
                 break;
             case CardState.Tapped:
-                Tooltip.Show("Сard can be used only once per turn");
+                CardPreviewer.instance.PreviewCard(this);
                 break;
             case CardState.Dead:
                 CardPreviewer.instance.PreviewCard(this);
@@ -109,7 +109,7 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
 
         if (card.CanDrag()) {
-            transform.localPosition = eventData.position - new Vector2(400, 300); //half screen offset
+            transform.localPosition = new Vector3((eventData.position.x/Screen.width)*800f-400f,(eventData.position.y/Screen.height)*600f-300f,0);
         }
     }
 

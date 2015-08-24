@@ -6,7 +6,8 @@ public enum CardState{
 	Handed,
 	Arena,
 	Tapped,
-	Dead
+	Dead,
+	Preview
 }
 
 
@@ -26,7 +27,7 @@ public class Card {
 	}
 
 	public bool CanDrag(){
-		return state!=CardState.Arena && state!=CardState.Dead && state!=CardState.Tapped;
+		return state==CardState.Stacked || state == CardState.Handed;
 	}
 }
 
