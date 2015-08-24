@@ -11,8 +11,9 @@ public class Player : MonoBehaviour, IHitReceiver {
 	public static Player instance;
     public void ReceiveHit(int hit) {
     	hp-=hit;
+    	NotificationManager.instance.ShowNotification("Player hit " + hit, Color.red);
     	if(hp<0){
-    		Debug.Log("LOOOOSEEE");
+    		GameOverScreen.EndGame(true);
     	}
     }
 

@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 public class CardPreviewer : MonoBehaviour,IPointerClickHandler {
 	public static CardPreviewer instance;
 	[SerializeField] GameObject shadow;
+    [SerializeField] AudioClip audioClip;
 	CardView card;
 	void Awake(){
 		instance = this;
@@ -27,6 +28,7 @@ public class CardPreviewer : MonoBehaviour,IPointerClickHandler {
     public void PreviewCard(CardView view){
     	shadow.SetActive(true);
     	card = view;
+        AudioSource.PlayClipAtPoint(audioClip, Vector3.zero);
     	prevParent = card.transform.parent;
         prevState = card.GetCardData().state;
         card.GetCardData().state = CardState.Preview;

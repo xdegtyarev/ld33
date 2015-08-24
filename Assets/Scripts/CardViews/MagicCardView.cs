@@ -3,11 +3,17 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class MagicCardView : CardView {
+	[SerializeField] AudioClip[] magicUseClip;
 	public override void Tap() {
 		Debug.Log("Magic Attacks");
 		base.Tap();
+		AudioSource.PlayClipAtPoint(magicUseClip[Random.Range(0, magicUseClip.Length)], Vector3.zero);
 		var data = GetCardData() as MagicCard;
-		TargetManager.GetTarget(this).ReceiveHit((Environment.instance.currentFraction == data.fraction)?(int)(data.attack*Environment.instance.currentFractionMultiplier):data.attack);
+		float multiplier = 1f;
+        if(Environment.instance.currentFraction == data.fraction){
+            multiplier*=Environment.instance.currentFractionMultiplier;
+        }
+		TargetManager.GetTarget(this).ReceiveHit((int)(data.attack*multiplier));
 		Graveyard.Engrave(this);
     }
 }

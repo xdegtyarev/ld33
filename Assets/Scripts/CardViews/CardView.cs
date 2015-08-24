@@ -8,6 +8,9 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     Transform startParent;
     public CardStack currentStack;
     Card card;
+
+    [SerializeField] AudioClip cardPick;
+    [SerializeField] AudioClip cardDrop;
     [SerializeField] Text nameLabel;
     [SerializeField] Text descLabel;
     [SerializeField] Text viewLabel;
@@ -24,6 +27,7 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             o.color = CardFactory.GetAccentsColorOfFraction(card.fraction);
         }
         viewBacking.color = CardFactory.GetViewBackingAccentsColorOfFraction(card.fraction);
+        descLabel.text = cardData.description;
     }
 
     public void Open(bool open) {
@@ -54,6 +58,7 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                     }
                 }
                 Open(true);
+                AudioSource.PlayClipAtPoint(cardPick, Vector3.zero);
                 Player.instance.playerHand.PickCard(this);
                 break;
             case CardState.Handed:
@@ -95,6 +100,7 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
 
         if (card.CanDrag()) {
+            AudioSource.PlayClipAtPoint(cardPick, Vector3.zero);
             Open(true);
             parentTransform = transform.parent;
             GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -116,6 +122,7 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnEndDrag(PointerEventData eventData) {
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         DragDropManager.ResetDragTarget(gameObject);
+        AudioSource.PlayClipAtPoint(cardDrop, Vector3.zero);
         if (card.state == CardState.Stacked || card.state == CardState.Handed) {
             Player.instance.playerHand.PickCard(this);
         }

@@ -24,9 +24,10 @@ public class Enemy : MonoBehaviour,IHitReceiver {
     }
 
     public void ReceiveHit(int hit) {
+        NotificationManager.instance.ShowNotification("Enemy hit " + hit, Color.white);
         hp -= hit;
         if (hp < 0) {
-            Debug.Log("LOOOOSEEE");
+            GameOverScreen.EndGame(false);
         }
     }
 

@@ -16,6 +16,7 @@ public enum CardState{
 public class Card {
 	public string name;
 	public string view;
+	public string description;
 	public int fraction;
 	[HideInInspector] public CardState state;
 	public virtual Card Clone(){
