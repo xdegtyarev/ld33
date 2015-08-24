@@ -27,7 +27,7 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             o.color = CardFactory.GetAccentsColorOfFraction(card.fraction);
         }
         viewBacking.color = CardFactory.GetViewBackingAccentsColorOfFraction(card.fraction);
-        descLabel.text = cardData.description;
+        descLabel.text = cardData.description.Replace("NEWLINE","\n");
     }
 
     public void Open(bool open) {

@@ -14,6 +14,7 @@ public class MonsterCardView : CardView, IHitReceiver {
     		hit -= (int)(data.def * multiplier);
     	}
         NotificationManager.instance.ShowNotification("Monster hit " + hit, Color.white);
+        data.hp-=hit;
  		if(data.hp<0){
 			Graveyard.Engrave(this);
 		}

@@ -16,4 +16,8 @@ public class MagicCardView : CardView {
 		TargetManager.GetTarget(this).ReceiveHit((int)(data.attack*multiplier));
 		Graveyard.Engrave(this);
     }
+
+	public override void Untap() {
+    	;
+    }
 }
