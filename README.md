@@ -1,12 +1,20 @@
 Pokemoji is a trading card game with Kaomoji-monsters. Like in any battler, your goal is simple: beat an opponent. Hope you'll enjoy the game. 
 
-How to play: 
+**[Play](http://ludumdare.com/compo/ludum-dare-33/?action=preview&uid=5862)**
+
+**How to play:**
+
 1) Pick up cards in hand (bottom of screen) from stacks on the left by clicking or dragging cards. 
+
 2) Play cards from hand by dragging them to slots on playfield. 
+
 3) Click on cards on playfield to "Tap"(Activate) them. 
+
 4) If you have nothing to do - click Next Turn 
 
+
 ᶘ ᵒᴥᵒᶅ 
+
 
 Tips: 
 There are 3 types of cards: Environment, Monsters, Magic. And 4 elements. Accent color of cards tells to which element it belongs. Tap on cards to see them closer. 
